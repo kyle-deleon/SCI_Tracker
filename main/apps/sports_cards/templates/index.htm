@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Cards Investmenbt Tracker</title>
+</head>
+<body>
+    <h1>New Feels Account</h1>
+    <form action="/users", method="post">
+        {% csrf_token %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li class="text-danger text-small">{{message}}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name">
+        <br>
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name">
+        <br>
+        <label for="user_name">User Name</label>
+        <input type="text" name="user_name">
+        <br>
+        <label for="email">Email</label>
+        <input type="text" name="email">
+        <br>
+        <label for="password">password</label>
+        <input type="password" name="password">
+        <br>
+        <label for="confirm_password">Confirm Password</label>
+        <input type="password" name="confirm_password">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <br>
+
+    <h1>Login</h1>
+    <form action="/login" method="POST">
+        {% csrf_token %}
+        <label for="email">Email</label>
+        <input type="text" name="email">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password">
+        <br>
+        <button type="submit">Login</button>
+
+    </form>
+</body>
+</html>
