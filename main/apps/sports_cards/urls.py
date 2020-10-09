@@ -15,7 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from . import views
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('', views.index),
+    # path('register'),
+    # path('login'),
+    # path('sports_cards'),
+    # path('sports_cards/new'),
+    # path('sports_cards/create'),
+    # path('sports_cards/<ind:id>'),
+    # path('sportds_cards/<int:id>/delete'),
+    # path('sports_cards/<int:id>/review'),
+    # path('sports_cards/<int:id>/like'),
+    # path('sports_cards/<int:id>/unlike'),
+    # path('users/<int:id>'),
+    # path('logout')
 ]

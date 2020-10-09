@@ -18,16 +18,4 @@ from django.urls import path, include
 
 urlpatterns = [
     path('', include('apps.sports_cards.urls')),
-    path('register'),
-    path('login'),
-    path('sports_cards'),
-    path('sports_cards/new'),
-    path('sports_cards/create'),
-    path('sports_cards/<ind:id>'),
-    path('sportds_cards/<int:id>/delete'),
-    path('sports_cards/<int:id>/review'),
-    path('sports_cards/<int:id>/like'),
-    path('sports_cards/<int:id>/unlike'),
-    path('users/<int:id>'),
-    path('logout')
 ]
