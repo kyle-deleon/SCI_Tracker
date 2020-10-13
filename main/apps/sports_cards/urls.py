@@ -19,6 +19,9 @@ from . import views
 
 urlpatterns = [
     path('', views.index),
+    path('users', views.create_users),
+    path('login', views.login),
+    path('dashboard', views.dashboard),
     # path('register'),
     # path('login'),
     # path('sports_cards'),
