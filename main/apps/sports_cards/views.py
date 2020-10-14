@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .models import *
+from django.contrib import messages
 
 def index(request):
     return render(request, 'index.htm')
@@ -12,9 +14,14 @@ def create_users(request):
         return redirect('/')
     else:
         hash_pw = bcrypt.hashpw(request.POST['password'].encode(), bcrypt.gensalt()).decode()
-        user = User.objects.create(first_name=request.POST["first_name"], last_name=request.POST["last_name"], email=request.POST["email"], bday=request.POST['bday'], password=hash_pw )
+        user = User.objects.create(
+            first_name=request.POST["first_name"], 
+            last_name=request.POST["last_name"], 
+            user_name=request.POST["user_name"],
+            email=request.POST["email"],  
+            password=hash_pw 
+            )
         print(user)
-
         request.session['uid'] = user.id
         #request.session['greeting'] = request.POST["first_name"]
 
@@ -39,11 +46,12 @@ def login(request):
     # redirect back to a safe route
     else:
         messages.error(request, "Email address is not registered.")
+
     return redirect("/")
 
 def dashboard(request):
     context = {
         "logged_user": User.objects.get(id=request.session['uid']),
-        "all_feels": Feels.objects.all().order_by("-created_at")
+        "all_cards": Cards.objects.all().order_by("-created_at")
     }
     return render(request, "dashboard.htm", context)
