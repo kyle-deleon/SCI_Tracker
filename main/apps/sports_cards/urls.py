@@ -22,7 +22,7 @@ urlpatterns = [
     path('users', views.create_users),
     path('login', views.login),
     path('dashboard', views.dashboard),
-    # path('sports_cards', views.show),
+    # path('sports_cards', views.sports_cards),
     # path('sports_cards/new', views.new_card),
     # path('sports_cards/create', views.create_card),
     # path('sports_cards/<ind:id>', views.show_one),
@@ -31,5 +31,5 @@ urlpatterns = [
     # path('sports_cards/<int:id>/like', views.like),
     # path('sports_cards/<int:id>/unlike', views.unlike),
     # path('users/<int:id>', views.show_user),
-    # path('logout', views.logout)
+    path('logout', views.logout)
 ]

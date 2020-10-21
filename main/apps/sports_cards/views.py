@@ -55,3 +55,13 @@ def dashboard(request):
         "all_cards": Cards.objects.all().order_by("-created_at")
     }
     return render(request, "dashboard.htm", context)
+
+# def new_card(request):
+#     Cards.objects.create(content=request.POST['content'], creator=User.objects.get(id=request.session['uid']))
+
+#     return redirect("/dashboard")
+
+def logout(request):
+    request.session.flush()
+
+    return redirect('/')
