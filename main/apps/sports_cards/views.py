@@ -56,10 +56,11 @@ def dashboard(request):
     }
     return render(request, "dashboard.htm", context)
 
-# def new_card(request):
-#     Cards.objects.create(content=request.POST['content'], creator=User.objects.get(id=request.session['uid']))
+def new_card(request):
+    return render (request, "new.htm")
 
-#     return redirect("/dashboard")
+def create_card(request):
+    errors = Cards.objects.validator(request.POST)
 
 def logout(request):
     request.session.flush()
