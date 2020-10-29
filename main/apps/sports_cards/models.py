@@ -30,6 +30,23 @@ class UserManager(models.Manager):
         
         return errors
 
+class CardManager(models.Manager):
+    def validator(self, postData):
+        errors = {}
+        if len(postData["year"]) < 3 :
+            errors["year"] = "Please enter correct year"
+        if len(postData["make"]) < 5:
+            errors["make"] = "Please enter correct make of card"
+        if len(postData["card_number"]) < 1:
+            errors["card_number"] = "Please enter correct card number"
+        if len(postData["name"]) < 4:
+            errors["name"] = "Player name must be at least 4 characters"
+        if len(postData["special"]) < 3:
+            errors["card_number"] = "Card special must be at least 3 characters"
+
+        
+        return errors
+
 class User(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
