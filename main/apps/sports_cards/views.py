@@ -62,6 +62,28 @@ def new_card(request):
 def create_card(request):
     errors = Cards.objects.validator(request.POST)
 
+    if len(errors):
+        for key, value in errors.items():
+            messages.error(request, value)
+        return redirect('/sports_cards/new')
+    else:
+        card = Cards.objects.create(
+            year=request.POST['year'], 
+            make=request.POST['make'], 
+            card_number=request.POST['card_number'], 
+            name=request.POST['name'], 
+            special=request.POST['special'], 
+            uploaded_by=User.objects.get(id=request.session['uid'])
+            )
+
+    return redirect(f'/sports_cards/{card.id}')
+
+def show_one(request, id):
+    context = {
+        "card": Cards.objects.get(id=id)
+    }
+    return render(request, "show_one.htm", context)
+
 def logout(request):
     request.session.flush()
 

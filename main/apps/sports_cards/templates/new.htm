@@ -10,6 +10,14 @@
     <div class="container">
         <h1>Add New Card</h1>
         <form action="/sports_cards/create" method="post">
+            {% csrf_token %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li class="text-danger text-small">{{message}}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
             <div class="form-group">
                 <label for="year">Year</label>
                 <input type="number" class="form-control w-50" name="year">

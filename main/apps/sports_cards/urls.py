@@ -25,7 +25,7 @@ urlpatterns = [
     # path('sports_cards', views.sports_cards),
     path('sports_cards/new', views.new_card), #GET
     path('sports_cards/create', views.create_card), #POST
-    # path('sports_cards/<ind:id>', views.show_one),
+    path('sports_cards/<int:id>', views.show_one),
     # path('sportds_cards/<int:id>/delete', views.delete_card),
     # path('sports_cards/<int:id>/review', views.create_review),
     # path('sports_cards/<int:id>/like', views.like),

@@ -30,22 +30,7 @@ class UserManager(models.Manager):
         
         return errors
 
-class CardManager(models.Manager):
-    def validator(self, postData):
-        errors = {}
-        if len(postData["year"]) < 3 :
-            errors["year"] = "Please enter correct year"
-        if len(postData["make"]) < 5:
-            errors["make"] = "Please enter correct make of card"
-        if len(postData["card_number"]) < 1:
-            errors["card_number"] = "Please enter correct card number"
-        if len(postData["name"]) < 4:
-            errors["name"] = "Player name must be at least 4 characters"
-        if len(postData["special"]) < 3:
-            errors["card_number"] = "Card special must be at least 3 characters"
 
-        
-        return errors
 
 class User(models.Model):
     first_name = models.CharField(max_length=255)
@@ -59,6 +44,23 @@ class User(models.Model):
     objects = UserManager()
     #connects to class UserManager
 
+class CardManager(models.Manager):
+    def validator(self, postData):
+        errors = {}
+        if len(postData["year"]) < 3 :
+            errors["year"] = "Year must be 4 digits"
+        if len(postData["make"]) < 5:
+            errors["make"] = "Please enter correct make of card"
+        if len(postData["card_number"]) < 1:
+            errors["card_number"] = "Please enter correct card number"
+        if len(postData["name"]) < 4:
+            errors["name"] = "Player name must be at least 4 characters"
+        if len(postData["special"]) < 3:
+            errors["special"] = "Card special must be at least 3 characters"
+
+        
+        return errors
+
 class Cards(models.Model):
     year = models.IntegerField() 
     make = models.CharField(max_length=255)
@@ -69,6 +71,8 @@ class Cards(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     uploaded_by = models.ForeignKey(User, related_name="has_cards", on_delete=models.CASCADE)
     liked_by = models.ManyToManyField(User, related_name="has_likes")
+
+    objects = CardManager()
 
 class Review(models.Model):
     content = models.TextField()
