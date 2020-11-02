@@ -9,42 +9,11 @@
 <body>
     <div class="container">
         <h1>Welcome Back, {{logged_user.first_name}} </h1>
-        <form action="/feels" method="post">
-            {% csrf_token %}
-            <input type="text" name="content" placeholder="What's goin' on?">
-            <button type="submit">Feels</button>
-        </form>
-        <!--original for-loop-->
-        {% for feels in all_feels %}
-        <h4>{{ feels.creator.first_name }} says:</h4>
-        <p>{{ feels.content }}</p>
-        <form action="/comment" method="post">
-            {% csrf_token %}
-            <input type='hidden' name="feels_id" value="{{feels.id}}">
-            <input type="text" name="comment_content">
-            <button type="submit">Add Comment</button>
-        </form>
-        <div>
-            <!-- comments from specific singular feels-->
-            {% for comment in feels.has_comments.all reversed %}
-                <p>{{comment.content}} &mdash; {{comment.creator.first_name}} <small>{{comment.created_at|date:"D d M Y"}}</small></p>
+        <div class="container">
+            {% for x in all_cards%}
+            <a href="/sports_cards/{{x.id}}"><h3>{{x.year}} {{x.name}} {{x.make}} {{x.special}} #{{x.card_number}}</h3></a>
             {% endfor %}
         </div>
-            {% if logged_user in feels.liked_by.all %}
-                <a href="/unlike/{{feels.id}}" role="button">Unlike &mdash; {{feels.liked_by.count}}</a>
-            {% elif logged_user not in feels.liked_by.all and request.session.uid != feels.creator.id %}
-                <a href="/like/{{feels.id}}" role="button">like &mdash; {{feels.liked_by.count}}</a>
-            {% endif %}
-            {% for user in feels.liked_by.all %}
-                <ul>
-                    <li>{{user.first_name}} {{user.last_name}}</li>
-                </ul>
-            {% endfor %}
-        {% endfor %}
-        <br>
-        <br>
-        <a href="/logout">Logout</a>
-        <!--{% for feels in logged_user.feels_created.all|dictsortreversed:"created_at" %} <--back door | tags in filters{% endfor %}-->
     </div>
 </body>
 </html>

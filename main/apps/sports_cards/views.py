@@ -52,7 +52,7 @@ def login(request):
 def dashboard(request):
     context = {
         "logged_user": User.objects.get(id=request.session['uid']),
-        "all_cards": Cards.objects.all().order_by("-created_at")
+        "all_cards": Cards.objects.all().order_by("-created_at"),
     }
     return render(request, "dashboard.htm", context)
 
