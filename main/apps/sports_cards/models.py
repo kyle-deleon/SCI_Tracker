@@ -74,6 +74,18 @@ class Cards(models.Model):
 
     objects = CardManager()
 
+
+class ReviewManager(models.Manager):
+    def validator(self, postData):
+        errors = {}
+        if len(postData["content"]) < 10 :
+            errors["review"] = "Review must be at least 10 charachters long"
+        if len(postData["rating"]) == 0 :
+            errors["rating"] = "Select a rating number"
+
+        
+        return errors
+
 class Review(models.Model):
     content = models.TextField()
     rating = models.IntegerField()
@@ -81,6 +93,8 @@ class Review(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     reviewed_by = models.ForeignKey(User, related_name="has_reviews", on_delete=models.CASCADE)
     cards = models.ForeignKey(Cards, related_name="has_reviews", on_delete=models.CASCADE)
+
+    objects = ReviewManager()
 
 
 

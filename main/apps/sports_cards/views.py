@@ -60,10 +60,11 @@ def new_card(request):
     return render (request, "new.htm")
 
 def create_card(request):
-    errors = Cards.objects.validator(request.POST)
+    card_errors = Cards.objects.validator(request.POST)
+    review_errors = Review.objects.validator(request.POST)
 
-    if len(errors):
-        for key, value in errors.items():
+    if len(card_errors):
+        for key, value in card_errors.items():
             messages.error(request, value)
         return redirect('/sports_cards/new')
     else:
@@ -74,6 +75,16 @@ def create_card(request):
             name=request.POST['name'], 
             special=request.POST['special'], 
             uploaded_by=User.objects.get(id=request.session['uid'])
+            )
+
+    if len(review_errors):
+        for key, value in review_errors.items():
+            messages.error(request, value)
+        return redirect('/sports_cards/new')
+    else:
+        review = Review.objects.create(
+            content=request.POST['content'], 
+            rating=request.POST['rating']
             )
 
     return redirect(f'/sports_cards/{card.id}')

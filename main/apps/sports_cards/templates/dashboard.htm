@@ -9,6 +9,11 @@
 <body>
     <div class="container">
         <h1>Welcome Back, {{logged_user.first_name}} </h1>
+        <div>
+            <a href="/sports_cards/new" role="button" class="btn btn-lg btn-warning">Add New Card</a>
+            <a href="/sports_cards/new" role="button" class="btn btn-lg btn-warning">View My Cards</a>
+        </div>
+        <h5>Most recently Added Cards</h5>
         <div class="container">
             {% for x in all_cards%}
             <a href="/sports_cards/{{x.id}}"><h3>{{x.year}} {{x.name}} {{x.make}} {{x.special}} #{{x.card_number}}</h3></a>
