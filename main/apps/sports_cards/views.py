@@ -84,7 +84,7 @@ def create_card(request):
     else:
         review = Review.objects.create(
             content=request.POST['content'], 
-            rating=request.POST['rating']
+            rating=int(request.POST['rating'])
             )
 
     return redirect(f'/sports_cards/{card.id}')
