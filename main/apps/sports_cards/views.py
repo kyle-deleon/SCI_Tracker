@@ -62,13 +62,13 @@ def new_card(request):
 def create_card(request):
     card_errors = Cards.objects.validator(request.POST)
     review_errors = Review.objects.validator(request.POST)
-
+    #check card
     if len(card_errors):
         for key, value in card_errors.items():
             messages.error(request, value)
         return redirect('/sports_cards/new')
     else:
-        card = Cards.objects.create(
+        card_object = Cards.objects.create(
             year=request.POST['year'], 
             make=request.POST['make'], 
             card_number=request.POST['card_number'], 
@@ -77,6 +77,8 @@ def create_card(request):
             uploaded_by=User.objects.get(id=request.session['uid'])
             )
 
+
+    # check review
     if len(review_errors):
         for key, value in review_errors.items():
             messages.error(request, value)
@@ -84,10 +86,12 @@ def create_card(request):
     else:
         review = Review.objects.create(
             content=request.POST['content'], 
-            rating=int(request.POST['rating'])
+            rating=int(request.POST['rating']),
+            reviewed_by=User.objects.get(id=request.session['uid']),
+            cards=card_object
             )
 
-    return redirect(f'/sports_cards/{card.id}')
+    return redirect(f'/sports_cards/{card_object.id}')
 
 def show_one(request, id):
     context = {
