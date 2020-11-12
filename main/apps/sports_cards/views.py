@@ -77,7 +77,6 @@ def create_card(request):
             uploaded_by=User.objects.get(id=request.session['uid'])
             )
 
-
     # check review
     if len(review_errors):
         for key, value in review_errors.items():
@@ -98,6 +97,22 @@ def show_one(request, id):
         "card": Cards.objects.get(id=id)
     }
     return render(request, "show_one.htm", context)
+
+def create_review(request, card_id):
+    review_errors = Review.objects.validator(request.POST)
+    if len(review_errors):
+        for key, value in review_errors.items():
+            messages.error(request, value)
+        return redirect('/dashboard')
+    else:
+        review = Review.objects.create(
+            content=request.POST['content'], 
+            rating=int(request.POST['rating']),
+            reviewed_by=User.objects.get(id=request.session['uid']),
+            card=Cards.objects.get(id=card_id)
+            )
+
+    return redirect(f'/sports_cards/{card_id}')
 
 def logout(request):
     request.session.flush()
