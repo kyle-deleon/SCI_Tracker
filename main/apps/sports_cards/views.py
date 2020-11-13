@@ -103,13 +103,12 @@ def create_review(request, card_id):
     if len(review_errors):
         for key, value in review_errors.items():
             messages.error(request, value)
-        return redirect('/dashboard')
     else:
         review = Review.objects.create(
             content=request.POST['content'], 
             rating=int(request.POST['rating']),
             reviewed_by=User.objects.get(id=request.session['uid']),
-            card=Cards.objects.get(id=card_id)
+            cards=Cards.objects.get(id=card_id)
             )
 
     return redirect(f'/sports_cards/{card_id}')
